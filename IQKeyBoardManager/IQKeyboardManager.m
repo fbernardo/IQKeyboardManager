@@ -744,7 +744,10 @@ void _IQShowLog(NSString *logString);
                 } completion:NULL];
 
                 //Maintaining contentSize
-                if (_lastScrollView.contentSize.height<_lastScrollView.frame.size.height)
+                if (
+                    ![_lastScrollView isKindOfClass:[UITableView class]] &&
+                    ![_lastScrollView isKindOfClass:[UICollectionView class]] &&
+                    _lastScrollView.contentSize.height<_lastScrollView.frame.size.height)
                 {
                     CGSize contentSize = _lastScrollView.contentSize;
                     contentSize.height = _lastScrollView.frame.size.height;
