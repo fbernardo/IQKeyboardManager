@@ -110,7 +110,7 @@ extern NSInteger const kIQPreviousNextButtonToolbarTag;
 /**
  Image that should replace the done button text. Default is nil.
  */
-@property(nonatomic, strong) UIImage *doneImage;
+@property(nullable, nonatomic, strong) UIImage *doneImage;
 
 ///--------------------------
 /// @name UITextView handling
