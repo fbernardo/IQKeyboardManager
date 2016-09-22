@@ -53,6 +53,16 @@
     return [shouldHideTitle boolValue];
 }
 
+-(void)setCustomBeforePreviousTarget:(nullable id)target action:(nullable SEL)action
+{
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:action]];
+    invocation.target = target;
+    invocation.selector = action;
+    UIView *selfObject = self;
+    [invocation setArgument:&selfObject atIndex:2];
+    self.beforePreviousInvocation = invocation;
+}
+
 -(void)setCustomPreviousTarget:(id)target action:(SEL)action
 {
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:action]];
@@ -61,6 +71,16 @@
     UIView *selfObject = self;
     [invocation setArgument:&selfObject atIndex:2];
     self.previousInvocation = invocation;
+}
+
+-(void)setCustomBeforeNextTarget:(nullable id)target action:(nullable SEL)action
+{
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:action]];
+    invocation.target = target;
+    invocation.selector = action;
+    UIView *selfObject = self;
+    [invocation setArgument:&selfObject atIndex:2];
+    self.beforeNextInvocation = invocation;
 }
 
 -(void)setCustomNextTarget:(id)target action:(SEL)action
@@ -83,9 +103,19 @@
     self.doneInvocation = invocation;
 }
 
+-(void)setBeforePreviousInvocation:(NSInvocation *)beforePreviousInvocation
+{
+    objc_setAssociatedObject(self, @selector(beforePreviousInvocation), beforePreviousInvocation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 -(void)setPreviousInvocation:(NSInvocation *)previousInvocation
 {
     objc_setAssociatedObject(self, @selector(previousInvocation), previousInvocation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(void)setBeforeNextInvocation:(NSInvocation *)beforeNextInvocation
+{
+    objc_setAssociatedObject(self, @selector(beforeNextInvocation), beforeNextInvocation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(void)setNextInvocation:(NSInvocation *)nextInvocation
@@ -98,9 +128,18 @@
     objc_setAssociatedObject(self, @selector(doneInvocation), doneInvocation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+-(NSInvocation *)beforePreviousInvocation
+{
+    return objc_getAssociatedObject(self, @selector(beforePreviousInvocation));
+}
 -(NSInvocation *)previousInvocation
 {
     return objc_getAssociatedObject(self, @selector(previousInvocation));
+}
+
+-(NSInvocation *)beforeNextInvocation
+{
+    return objc_getAssociatedObject(self, @selector(beforeNextInvocation));
 }
 
 -(NSInvocation *)nextInvocation

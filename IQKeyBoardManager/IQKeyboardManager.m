@@ -1459,6 +1459,11 @@ void _IQShowLog(NSString *logString);
         //  Retaining textFieldView
         UIView *textFieldRetain = _textFieldView;
         
+        if (textFieldRetain.beforePreviousInvocation)
+        {
+            [textFieldRetain.beforePreviousInvocation invoke];
+        }
+        
         BOOL isAcceptAsFirstResponder = [nextTextField becomeFirstResponder];
         
         //  If it refuses then becoming previous textFieldView as first responder again.    (Bug ID: #96)
@@ -1494,6 +1499,11 @@ void _IQShowLog(NSString *logString);
         
         //  Retaining textFieldView
         UIView *textFieldRetain = _textFieldView;
+        
+        if (textFieldRetain.beforeNextInvocation)
+        {
+            [textFieldRetain.beforeNextInvocation invoke];
+        }
         
         BOOL isAcceptAsFirstResponder = [nextTextField becomeFirstResponder];
         

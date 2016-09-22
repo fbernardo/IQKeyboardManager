@@ -52,7 +52,23 @@
  @param target Target object.
  @param action Target Selector.
  */
+-(void)setCustomBeforePreviousTarget:(nullable id)target action:(nullable SEL)action;
+
+/**
+ Additional target & action to do get callback action. Note that setting custom `previous` selector doesn't affect native `previous` functionality, this is just used to notifiy user to do additional work according to need.
+ 
+ @param target Target object.
+ @param action Target Selector.
+ */
 -(void)setCustomPreviousTarget:(nullable id)target action:(nullable SEL)action;
+
+/**
+ Additional target & action to do get callback action. Note that setting custom `previous` selector doesn't affect native `previous` functionality, this is just used to notifiy user to do additional work according to need.
+ 
+ @param target Target object.
+ @param action Target Selector.
+ */
+-(void)setCustomBeforeNextTarget:(nullable id)target action:(nullable SEL)action;
 
 /**
  Additional target & action to do get callback action. Note that setting custom `next` selector doesn't affect native `next` functionality, this is just used to notifiy user to do additional work according to need.
@@ -71,9 +87,19 @@
 -(void)setCustomDoneTarget:(nullable id)target action:(nullable SEL)action;
 
 /**
+ Customized Invocation to be called BEFORE previous arrow action. previousInvocation is internally created using setCustomPreviousTarget: method.
+ */
+@property (nullable, strong, nonatomic) NSInvocation *beforePreviousInvocation;
+
+/**
  Customized Invocation to be called on previous arrow action. previousInvocation is internally created using setCustomPreviousTarget: method.
  */
 @property (nullable, strong, nonatomic) NSInvocation *previousInvocation;
+
+/**
+ Customized Invocation to be called BEFORE next arrow action. previousInvocation is internally created using setCustomPreviousTarget: method.
+ */
+@property (nullable, strong, nonatomic) NSInvocation *beforeNextInvocation;
 
 /**
  Customized Invocation to be called on next arrow action. nextInvocation is internally created using setCustomNextTarget: method.
